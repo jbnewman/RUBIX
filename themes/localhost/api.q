@@ -1,0 +1,1 @@
+<?= $RUBIX->app_html; ?>
