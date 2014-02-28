@@ -1,0 +1,46 @@
+# Turn on url rewrite
+RewriteEngine On
+Options Indexes FollowSymLinks
+
+
+
+# remove www from host
+RewriteCond %{REQUEST_URI} !=/server-status
+RewriteCond %{HTTP_HOST} ^www\.(.+)
+RewriteCond %{HTTPS}s/%1 ^(on(s)|offs)/(.+)
+RewriteRule ^ http%2://%3%{REQUEST_URI} [L,R=301]
+
+
+#order deny,allow
+#deny from all
+#BEGIN IP FILTER
+#allow from 111.222.333.444
+#allow from 111.222.333.444
+#allow from 111.222.333.444
+#END IP FILTER
+
+RewriteBase /
+
+
+
+# rewrite all image/css/js/media requests
+RewriteCond %{REQUEST_URI} !=/server-status
+RewriteRule ^images/(.+)?$ themes/%{HTTP_HOST}/images/$1 [NC,L]
+RewriteRule ^img/(.+)?$ themes/%{HTTP_HOST}/img/$1 [NC,L]
+RewriteRule ^css/(.+)?$ themes/%{HTTP_HOST}/css/$1 [NC,L]
+RewriteRule ^js/(.+)?$ themes/%{HTTP_HOST}/js/$1 [NC,L]
+RewriteRule ^media/(.+)?$ themes/%{HTTP_HOST}/media/$1 [NC,L]
+RewriteRule ^uploads/(.+)?$ themes/%{HTTP_HOST}/uploads/$1 [NC,L]
+RewriteRule ^sitemap(.+)?$ themes/%{HTTP_HOST}/sitemap$1 [NC,L]
+
+
+
+# Leave this alone
+RewriteCond %{REQUEST_URI} !=/server-status
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+
+# missing file/directory
+RewriteRule ^([^?]*) index.php?request=$1 [L,QSA]
