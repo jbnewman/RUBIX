@@ -2,6 +2,11 @@
 RewriteEngine On
 Options Indexes FollowSymLinks
 
+# restrict access to .q files
+<FilesMatch "\.q$">
+  order allow,deny
+  deny from all
+</FilesMatch>
 
 
 # remove www from host
