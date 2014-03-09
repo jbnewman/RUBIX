@@ -1,6 +1,6 @@
 <?php
 
-class pdo {
+class sql {
 	
 	public function __construct($engine='mysql'){
 		try {
